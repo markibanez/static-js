@@ -1,24 +1,28 @@
 const connectUrl = '/connect-web3'
 
 checkNFTs = async () => {
-    const hasMetamask = Boolean(ethereum);
-    if (hasMetamask) {
-        if (ethereum.selectedAddress) {
-            var provider = await new ethers.providers.Web3Provider(window.ethereum, "mainnet")
-            var abi = ["function balanceOf(address owner) view returns (uint balance)"];
+    try {
+        if (typeof ethereum !== 'undefined') {
+            if (ethereum.selectedAddress) {
+                var provider = await new ethers.providers.Web3Provider(window.ethereum, "mainnet")
+                var abi = ["function balanceOf(address owner) view returns (uint balance)"];
 
-            var contract = new ethers.Contract("0xd89B00736C50C867133EBc5BF731FDbA6b29b3b7", abi, provider);
+                var contract = new ethers.Contract("0xd89B00736C50C867133EBc5BF731FDbA6b29b3b7", abi, provider);
 
-            contract.balanceOf(ethereum.selectedAddress).then((res) => {
-                if (res.eq(0)) {
-                    window.location.href = `${connectUrl}?code=zero-balance`;
-                }
-            })
+                contract.balanceOf(ethereum.selectedAddress).then((res) => {
+                    if (res.eq(0)) {
+                        window.location.href = `${connectUrl}?code=zero-balance`;
+                    }
+                })
+            } else {
+                window.location.href = `${connectUrl}?code=no-wallet`;
+            }
         } else {
-            window.location.href = `${connectUrl}?code=no-wallet`;
+            window.location.href = `${connectUrl}?code=no-ethereum`;
         }
-    } else {
-        window.location.href = `${connectUrl}?code=no-ethereum`;
+    } catch (err) {
+        console.log(err);
+        window.location.href = `${connectUrl}?code=unhandled-exception`;
     }
 }
 
