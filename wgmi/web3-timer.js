@@ -1,6 +1,5 @@
 checkNFTs = async () => {
     console.log(ethereum);
-    // wtf this works
 }
 
 setInterval(async () => {
