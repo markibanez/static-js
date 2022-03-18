@@ -1,17 +1,24 @@
 const connectUrl = '/connect-web3'
 
 checkNFTs = async () => {
-    console.log(ethereum);
     if (ethereum) {
         if (ethereum.selectedAddress) {
             console.log(ethereum.selectedAddress);
+            var provider = await new ethers.providers.Web3Provider(window.ethereum, "mainnet")
+            var abi = ["function balanceOf(address owner) view returns (uint balance)"];
+
+            var contract = new ethers.Contract("0xd89B00736C50C867133EBc5BF731FDbA6b29b3b7", abi, provider);
+
+            contract.balanceOf(ethereum.selectedAddress).then((res) => {
+                if (res === 0) {
+                    window.location.href = `${connectUrl}?code=zero-balance`;
+                }
+            })
         } else {
-            console.log('no wallet address');
-            // window.location.href = connectUrl;
+            window.location.href = `${connectUrl}?code=no-wallet`;
         }
     } else {
-        console.log('no ethereum');
-        // window.location.href = connectUrl;
+        window.location.href = `${connectUrl}?code=no-ethereum`;
     }
 }
 
