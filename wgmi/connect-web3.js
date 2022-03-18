@@ -11,9 +11,9 @@ async function hasPass()
     var address = await signer.getAddress()
     var abi = ["function balanceOf(address owner) view returns (uint balance)"]
 
-    var contractShroom = new ethers.Contract("0xd89B00736C50C867133EBc5BF731FDbA6b29b3b7", abi, signer)
+    var contract = new ethers.Contract("0xd89B00736C50C867133EBc5BF731FDbA6b29b3b7", abi, signer)
 
-    contractShroom.balanceOf(address).then((res) =>
+    contract.balanceOf(address).then((res) =>
     {
         if (res > 0)
         {
