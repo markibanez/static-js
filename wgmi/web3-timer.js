@@ -6,10 +6,12 @@ checkNFTs = async () => {
         if (ethereum.selectedAddress) {
             console.log(ethereum.selectedAddress);
         } else {
-            window.location.href = connectUrl;
+            console.log('no wallet address');
+            // window.location.href = connectUrl;
         }
     } else {
-        window.location.href = connectUrl;
+        console.log('no ethereum');
+        // window.location.href = connectUrl;
     }
 }
 
