@@ -9,8 +9,7 @@ checkNFTs = async () => {
             var contract = new ethers.Contract("0xd89B00736C50C867133EBc5BF731FDbA6b29b3b7", abi, provider);
 
             contract.balanceOf(ethereum.selectedAddress).then((res) => {
-                console.log(res);
-                if (res === 0) {
+                if (res.eq(0)) {
                     window.location.href = `${connectUrl}?code=zero-balance`;
                 }
             })
