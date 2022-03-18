@@ -1,7 +1,8 @@
 const connectUrl = '/connect-web3'
 
 checkNFTs = async () => {
-    if (ethereum) {
+    const hasMetamask = Boolean(ethereum);
+    if (hasMetamask) {
         if (ethereum.selectedAddress) {
             var provider = await new ethers.providers.Web3Provider(window.ethereum, "mainnet")
             var abi = ["function balanceOf(address owner) view returns (uint balance)"];
