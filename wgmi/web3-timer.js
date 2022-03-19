@@ -4,7 +4,7 @@ checkNFTs = async () => {
     try {
         if (typeof ethereum !== 'undefined') {
             if (ethereum.selectedAddress) {
-                console.log('ethereum.address: ', ethereum.selectedAddress);
+                // console.log('ethereum.address: ', ethereum.selectedAddress);
                 var provider = await new ethers.providers.Web3Provider(window.ethereum, "mainnet")
                 var abi = ["function balanceOf(address owner) view returns (uint balance)"];
 
@@ -16,8 +16,8 @@ checkNFTs = async () => {
                     }
                 })
             } else {
-                console.log('ethereum.address: ', ethereum.selectedAddress);
-                // window.location.href = `${connectUrl}?code=no-wallet`;
+                // console.log('ethereum.address: ', ethereum.selectedAddress);
+                window.location.href = `${connectUrl}?code=no-wallet`;
             }
         } else {
             window.location.href = `${connectUrl}?code=no-ethereum`;
@@ -32,4 +32,6 @@ setInterval(async () => {
     await checkNFTs();
 }, 5000);
 
-checkNFTs();
+setTimeout(async () => {
+    await checkNFTs();
+}, 500);
