@@ -11,8 +11,7 @@ async function hasPass() {
     var contract = new ethers.Contract('0xA3106416fDE395bf6A62B8e932dF01F5f660A5F2', abi, signer);
 
     contract.balanceOf(address, "1").then((res) => {
-        console.log(res)
-        if (res > 0) {
+        if (res.eq(0)) {
             alert("This wallet doesn't have a NFT Academy Pass, you can't access the content");
         } else {
             window.location.href = `/course-trainings`;
