@@ -14,12 +14,13 @@ const providerOptions = {
 };
 
 const web3Modal = new Web3Modal({
-    cacheProvider: false,
+    cacheProvider: true,
     providerOptions
 });
 
 async function hasPass() {
     await web3Modal.clearCachedProvider();
+    localStorage.clear();
     const web3ModalProvider = await web3Modal.connect();
     var provider = await new ethers.providers.Web3Provider(web3ModalProvider, 'mainnet');
     await provider.send('eth_requestAccounts', []);
