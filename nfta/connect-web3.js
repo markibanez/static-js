@@ -19,7 +19,7 @@ const web3Modal = new Web3Modal({
 });
 
 async function hasPass() {
-    const web3ModalProvider = web3Modal.connect
+    const web3ModalProvider = await web3Modal.connect();
     var provider = await new ethers.providers.Web3Provider(web3ModalProvider, 'mainnet');
     await provider.send('eth_requestAccounts', []);
     var signer = provider.getSigner();
