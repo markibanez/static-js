@@ -45,7 +45,7 @@ async function hasPass() {
         if (res.eq(0)) {
             alert("This wallet doesn't have a NFT Academy Pass, you can't access the content");
         } else {
-            window.location.href = `/course-trainings`;
+            window.location.href = `/elite-training`;
         }
     });
 }
