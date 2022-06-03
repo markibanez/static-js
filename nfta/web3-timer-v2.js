@@ -25,12 +25,12 @@ checkNFTs = async () => {
             const signer = await provider.getSigner();
             const address = await signer.getAddress();
             if (address) {
-                // console.log('ethereum.address: ', ethereum.selectedAddress);
+                console.log(`active address:`, address);
                 var abi =  [{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
 
                 var contract = new ethers.Contract("0xA3106416fDE395bf6A62B8e932dF01F5f660A5F2", abi, provider);
 
-                contract.balanceOf(ethereum.selectedAddress, "1").then((res) => {
+                contract.balanceOf(address, "1").then((res) => {
                     if (res.eq(0)) {
                         window.location.href = `${connectUrl}?code=zero-balance`;
                     }
