@@ -41,13 +41,19 @@ async function hasPass() {
 
     var contract = new ethers.Contract('0xA3106416fDE395bf6A62B8e932dF01F5f660A5F2', abi, signer);
 
-    contract.balanceOf(address, '1').then((res) => {
-        if (res.eq(0)) {
-            alert("This wallet doesn't have a NFT Academy Pass, you can't access the content");
-        } else {
-            window.location.href = `/elite-training`;
-        }
-    });
+    const nftaBalance = await contract.balanceOf(address, 1);
+
+    const shroomsAbi = [
+        "function balanceOf(address owner) view returns (uint balance)"
+    ]
+    const shroomsContract = new ethers.Contract('0xd9f23168ADb7B0276793dFBA167ad51Ec4DA23a1', shroomsAbi, signer);
+    const shroomsBalance = await shroomsContract.balanceOf(address);
+
+    if (nftaBalance.eq(0) && shroomsBalance.eq(0)) {
+        alert("This wallet doesn't have a NFT Academy Pass or Ancient Shroom NFT, you can't access the content");
+    } else {
+        window.location.href = `/elite-training`;
+    }
 }
 
 bt.onclick = hasPass;

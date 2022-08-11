@@ -29,12 +29,17 @@ checkNFTs = async () => {
                 var abi =  [{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
 
                 var contract = new ethers.Contract("0xA3106416fDE395bf6A62B8e932dF01F5f660A5F2", abi, provider);
+                const nftaBalance = await contract.balanceOf(address, 1);
 
-                contract.balanceOf(address, "1").then((res) => {
-                    if (res.eq(0)) {
-                        window.location.href = `${connectUrl}?code=zero-balance`;
-                    }
-                })
+                const shroomsAbi = [
+                    "function balanceOf(address owner) view returns (uint balance)"
+                ]
+                const shroomsContract = new ethers.Contract('0xd9f23168ADb7B0276793dFBA167ad51Ec4DA23a1', shroomsAbi, signer);
+                const shroomsBalance = await shroomsContract.balanceOf(address);
+
+                if (nftaBalance.eq(0) && shroomsBalance.eq(0)) {
+                    window.location.href = `${connectUrl}?code=zero-balance`;
+                }
             } else {
                 // console.log('ethereum.address: ', ethereum.selectedAddress);
                 window.location.href = `${connectUrl}?code=no-wallet`;
