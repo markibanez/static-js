@@ -55,7 +55,7 @@ checkNFTs = async () => {
 
 setInterval(async () => {
     await checkNFTs();
-}, 5000);
+}, 3600000);
 
 setTimeout(async () => {
     await checkNFTs();
